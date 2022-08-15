@@ -16,7 +16,34 @@
       "price": 29.9
     },
     {
+      "name": "teste",
+      "price": "12",
       "id": 4
+    },
+    {
+      "name": "cadeira",
+      "price": "10",
+      "id": 5
+    },
+    {
+      "name": "lalala",
+      "price": "9438",
+      "id": 6
+    },
+    {
+      "name": "hahahah",
+      "price": "904230",
+      "id": 7
+    },
+    {
+      "name": "",
+      "price": "",
+      "id": 8
+    },
+    {
+      "name": "a",
+      "price": "4234",
+      "id": 9
     }
   ]
 }

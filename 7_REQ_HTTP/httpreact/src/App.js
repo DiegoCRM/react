@@ -2,16 +2,26 @@ import './App.css';
 
 import { useState, useEffect } from "react";
 
+// 4 - custom hook
+
+import { useFetch } from './hooks/useFetch';
+
 const url = "http://localhost:3000/products";
 
 function App() {
   const [products, setProducts] = useState([]);
 
+  // 4 - custom 
+
+  const { data: items, httpConfig, loading } = useFetch(url);
+
+ 
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
   // 1 - resgatando dados
-  useEffect(() => {
+  /* useEffect(() => {
     async function fetchData() {
       const res = await fetch(url);
 
@@ -21,7 +31,8 @@ function App() {
     }
 
     fetchData();
-  }, []);
+  }, []); */
+
 
   // 2 - add de produtos
   const handleSubmit = async (e) => {
@@ -32,33 +43,49 @@ function App() {
       price,
     };
 
-    const res = await fetch(url, {
+
+    /* const res = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "applicatio/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(product),
     });
+
+
     // 3 - carregamento dinamico
     const addedProduct = await res.json()
 
-    setProducts((prevProducts) => [...prevProducts, addedProduct])
+    setProducts((prevProducts) => [...prevProducts, addedProduct]); */
+
+    // 5 - refatorando POST
+
+    httpConfig(product, "POST")
+
+    setName("");
+    setPrice("");
 
   };
 
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
-      <ul>
-        {products.map((product) => (
+      {/* 6 - loagind */}
+
+      {loading && <p>Carregando dados...</p>}
+      {!loading && <ul>
+        {items && items.map((product) => (
           <li key={product.id}>{product.name} - R$ {product.price}</li>
         ))}
-      </ul>
+      </ul>}
+
       <div className="add-product">
         <form onSubmit={handleSubmit}>
           <label >
             Nome:
             <input type="text" value={name} name="name" onChange={(e) => setName(e.target.value)} />
+          </label>
+          <label>
             Preço:
             <input type="number" value={price} name="price" onChange={(e) => setPrice(e.target.value)} />
           </label>
